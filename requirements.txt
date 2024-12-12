@@ -1,0 +1,15 @@
+streamlit-option-menu
+maya
+streamlit-aggrid
+plotly
+stqdm
+pyodbc
+xlrd
+openpyxl
+streamlit-echarts
+streamlit-extras
+numpy
+boto3
+streamlit-autorefresh
+pyarrow
+fpdf

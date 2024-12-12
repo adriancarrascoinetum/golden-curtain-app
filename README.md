@@ -1,1 +1,1 @@
-# golden-curtain-app
+# golden-app
