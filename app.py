@@ -69,8 +69,13 @@ def generar_pdf(df):
     return pdf_path
 
 try:
-    list_passwords = GetJSON("pwd_list.json", pwd_["aws_key"], pwd_["aws_secret_key"])
-    status_app = True
+    if "passwords" not in st.session_state:
+        with st.spinner("Loading App"):
+            list_passwords = GetJSON("pwd_list.json", pwd_["aws_key"], pwd_["aws_secret_key"])
+            st.session_state["passwords"] = list_passwords
+            status_app = True
+    else:
+        list_passwords = st.session_state["passwords"]
 except:
     st.error("Unable to connect to DB")
     status_app = False
@@ -100,9 +105,18 @@ if status_app:
 
     else:
         
-        dict_personajes = GetJSON("diccionario_personajes.json", pwd_["aws_key"], pwd_["aws_secret_key"])
-        
-        dict_escenas = GetJSON("diccionario_escenas.json", pwd_["aws_key"], pwd_["aws_secret_key"])
+        if "escenas" not in st.session_state:
+            with st.spinner("Cargando Sesión"):
+                dict_personajes = GetJSON("diccionario_personajes.json", pwd_["aws_key"], pwd_["aws_secret_key"])
+                
+                dict_escenas = GetJSON("diccionario_escenas.json", pwd_["aws_key"], pwd_["aws_secret_key"])
+            
+            st.session_state["escenas"] = dict_escenas
+            st.session_state["personajes"] = dict_personajes
+        else:
+            dict_escenas = st.session_state["escenas"]
+            dict_personajes = st.session_state["personajes"]
+
 
 
         if st.session_state["user"] == "golden":
@@ -206,7 +220,7 @@ if status_app:
         
         elif selected3 == "Configuración":
 
-            list_passwords = GetJSON("pwd_list.json", st.secrets["aws_key"], st.secrets["aws_secret_key"])
+            list_passwords = st.session_state["passwords"]
                 
             data_passwords = pd.DataFrame(list_passwords)
             with st.expander("Usuarios"):
