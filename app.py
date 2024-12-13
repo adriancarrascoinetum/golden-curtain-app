@@ -76,6 +76,7 @@ try:
             status_app = True
     else:
         list_passwords = st.session_state["passwords"]
+        status_app = True
 except:
     st.error("Unable to connect to DB")
     status_app = False
