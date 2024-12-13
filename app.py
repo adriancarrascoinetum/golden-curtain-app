@@ -81,6 +81,9 @@ except:
     st.error("Unable to connect to DB")
     status_app = False
 
+if status_app not in locals():
+    status_app = True
+
 if status_app:
     if "user" not in st.session_state or st.session_state["user"] == None:
 
